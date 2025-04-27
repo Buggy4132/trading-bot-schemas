@@ -72,9 +72,9 @@ class EnrichedSignalModel(BaseModel):
         return v
 
     @model_validator(mode="after")
-    def validate_timestamps(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        timestamp = values.get('timestamp')
-        expiration = values.get('expiration')
+    def validate_timestamps(cls, values: "EnrichedSignalModel") -> "EnrichedSignalModel":
+        timestamp = values.timestamp
+        expiration = values.expiration
 
         if timestamp and expiration and expiration <= timestamp:
             raise ValueError("Expiration timestamp must be after enrichment timestamp")
@@ -86,7 +86,7 @@ class EnrichedSignalModel(BaseModel):
         json_encoders = {
             datetime: lambda v: v.isoformat(),
         }
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "schema_version": "1.0",
                 "signal_id": "sig_12345",
