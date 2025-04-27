@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Trade Signal",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Version of the schema."
+    },
+    "bot_id": {
+      "type": "string",
+      "description": "Identifier for the Analyst Bot generating the signal."
+    },
+    "signal_id": {
+      "type": "string",
+      "description": "Unique identifier for the trade signal."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the signal was generated (ISO 8601)."
+    },
+    "action": {
+      "type": "string",
+      "enum": ["BUY", "SELL"],
+      "description": "Action to be taken based on the signal."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Confidence level of the signal, between 0 and 1."
+    },
+    "asset": {
+      "type": "string",
+      "description": "The financial instrument (e.g., stock, currency) for the trade."
+    },
+    "market": {
+      "type": "string",
+      "description": "The market or exchange where the trade should be executed."
+    },
+    "time_validity": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Expiration time for the signal."
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Quantity or position size for the trade."
+    },
+    "strategy_id": {
+      "type": "string",
+      "description": "Identifier of the strategy that generated the signal."
+    },
+    "target_price": {
+      "type": "number",
+      "description": "Target price for the trade."
+    },
+    "stop_loss": {
+      "type": "number",
+      "description": "Stop-loss price for the trade."
+    }
+  },
+  "required": ["schema_version", "bot_id", "signal_id", "timestamp", "action", "confidence", "asset", "market"]
+}
