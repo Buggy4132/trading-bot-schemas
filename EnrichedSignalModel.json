@@ -1,13 +1,60 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "EnrichedSignalModel",
+  "title": "Enriched Signal",
   "type": "object",
   "properties": {
-    "signal_id": { "type": "string" },
-    "symbol": { "type": "string" },
-    "action": { "type": "string", "enum": ["buy", "sell"] },
-    "timestamp": { "type": "string", "format": "date-time" },
-    "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 }
+    "schema_version": {
+      "type": "string",
+      "description": "Version of the schema."
+    },
+    "signal_id": {
+      "type": "string",
+      "description": "Unique identifier for the original trade signal."
+    },
+    "enriched_by": {
+      "type": "string",
+      "description": "Identifier for the Research Bot enriching the signal."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the signal was enriched (ISO 8601)."
+    },
+    "macro_sentiment": {
+      "type": "string",
+      "enum": ["positive", "neutral", "negative"],
+      "description": "Sentiment analysis of macroeconomic factors."
+    },
+    "earnings_surprise": {
+      "type": "number",
+      "description": "Earnings surprise percentage affecting the trade decision."
+    },
+    "news_score": {
+      "type": "number",
+      "description": "Sentiment score derived from news analysis, between -1 and 1."
+    },
+    "recommendation": {
+      "type": "string",
+      "enum": ["strengthen", "weaken", "neutral"],
+      "description": "Recommendation based on enrichment."
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri",
+        "description": "Source URLs for the data used in enrichment."
+      }
+    },
+    "market_phase": {
+      "type": "string",
+      "enum": ["bull", "bear", "sideways"],
+      "description": "Market phase providing additional context."
+    },
+    "risk_flag": {
+      "type": "boolean",
+      "description": "Flag indicating if enriched intelligence increases perceived trade risk."
+    }
   },
-  "required": ["signal_id", "symbol", "action", "timestamp", "confidence_score"]
+  "required": ["schema_version", "signal_id", "enriched_by", "timestamp", "macro_sentiment", "recommendation"]
 }
