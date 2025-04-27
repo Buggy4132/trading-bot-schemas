@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GovernanceAlertsModel",
+  "type": "object",
+  "properties": {
+    "alert_id": { "type": "string" },
+    "type": { "type": "string", "enum": ["compliance", "performance", "security"] },
+    "message": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" }
+  },
+  "required": ["alert_id", "type", "message", "timestamp"]
+}

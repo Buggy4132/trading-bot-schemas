@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EnrichedSignalModel",
+  "type": "object",
+  "properties": {
+    "signal_id": { "type": "string" },
+    "symbol": { "type": "string" },
+    "action": { "type": "string", "enum": ["buy", "sell"] },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 }
+  },
+  "required": ["signal_id", "symbol", "action", "timestamp", "confidence_score"]
+}
