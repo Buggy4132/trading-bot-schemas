@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, HttpUrl, validator, root_validator
+from pydantic import BaseModel, Field, HttpUrl, validator, model_validator
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 from enum import Enum
@@ -61,7 +61,7 @@ class EnrichedSignalModel(BaseModel):
     priority: Optional[int] = Field(None, ge=1, le=10, description="Priority of this enrichment (1-10, with 10 being highest).")
     expiration: Optional[datetime] = Field(None, description="Timestamp when this enrichment is no longer valid.")
     extra_data: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Additional custom data for future extensions.")
-    
+
     @validator('sources')
     def validate_sources(cls, v: List[HttpUrl]) -> List[HttpUrl]:
         if v:
@@ -70,17 +70,17 @@ class EnrichedSignalModel(BaseModel):
             if len(v) == 0:
                 raise ValueError("Sources list cannot be empty when provided")
         return v
-    
-    @root_validator
+
+    @model_validator(mode="after")
     def validate_timestamps(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         timestamp = values.get('timestamp')
         expiration = values.get('expiration')
-        
+
         if timestamp and expiration and expiration <= timestamp:
             raise ValueError("Expiration timestamp must be after enrichment timestamp")
-        
+
         return values
-    
+
     class Config:
         frozen = True
         json_encoders = {
